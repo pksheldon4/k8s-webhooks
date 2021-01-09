@@ -1,0 +1,1 @@
+openssl pkcs12 -inkey privkey1.pem -in cert1.pem -export -out keystore.p12
