@@ -5,3 +5,11 @@ server:
     key-store-password: Piv0tal!22
     enabled: true
   port: 8443
+
+logging:
+  level:
+    ROOT: info
+    com.pksheldon4.webhooks:
+      mutatingadmission: info
+      imagepolicy: warn
+      validatingadmission: warn

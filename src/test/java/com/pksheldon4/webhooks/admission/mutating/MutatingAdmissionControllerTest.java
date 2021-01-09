@@ -1,7 +1,7 @@
-package com.pksheldon4.webhooks.validatingadmission;
+package com.pksheldon4.webhooks.admission.mutating;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.pksheldon4.webhooks.validatingadmission.model.AdmissionReview;
+import com.pksheldon4.webhooks.admission.model.AdmissionReview;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -19,29 +19,28 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(SpringExtension.class)
-class ValidatingAdmissionControllerTest {
-
+class MutatingAdmissionControllerTest {
     private final ObjectMapper mapper = new ObjectMapper();
     private MockMvc mvc;
 
     @BeforeEach
     void setUp() {
-        ValidatingAdmissionController controller = new ValidatingAdmissionController(mapper);
+        MutatingAdmissionController controller = new MutatingAdmissionController(mapper);
         mvc = MockMvcBuilders.standaloneSetup(controller).build();
     }
 
     @Test
-    public void verifyTestJson(@Value("classpath:AdmissionReview-request.json") Resource admissionReviewRequest) throws Exception {
+    public void verifyTestJson(@Value("classpath:MutatingAdmissionReview-request.json") Resource admissionReviewRequest) throws Exception {
         AdmissionReview admissionReview = mapper.readValue(admissionReviewRequest.getInputStream().readAllBytes(), AdmissionReview.class);
         System.out.println(admissionReview.toString());
     }
 
     @Test
-    public void validateReturnsSuccessfully(@Value("classpath:AdmissionReview-request.json") Resource admissionReviewRequest) throws Exception {
+    public void validateReturnsSuccessfully(@Value("classpath:MutatingAdmissionReview-request.json") Resource admissionReviewRequest) throws Exception {
 
         AdmissionReview admissionReview = mapper.readValue(admissionReviewRequest.getInputStream().readAllBytes(), AdmissionReview.class);
 
-        mvc.perform(MockMvcRequestBuilders.post("/validate")
+        mvc.perform(MockMvcRequestBuilders.post("/mutate")
             .content(admissionReviewRequest.getInputStream().readAllBytes())
             .accept(MediaType.APPLICATION_JSON) //Response Type
             .contentType(MediaType.APPLICATION_JSON)) //Request Type

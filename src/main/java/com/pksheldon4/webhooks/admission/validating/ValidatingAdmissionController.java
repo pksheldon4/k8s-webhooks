@@ -1,9 +1,9 @@
-package com.pksheldon4.webhooks.validatingadmission;
+package com.pksheldon4.webhooks.admission.validating;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.pksheldon4.webhooks.validatingadmission.model.AdmissionReview;
-import com.pksheldon4.webhooks.validatingadmission.model.AdmissionReviewResponse;
+import com.pksheldon4.webhooks.admission.model.AdmissionReview;
+import com.pksheldon4.webhooks.admission.model.AdmissionReviewResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

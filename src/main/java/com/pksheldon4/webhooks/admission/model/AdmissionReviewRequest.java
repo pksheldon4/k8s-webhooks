@@ -1,4 +1,4 @@
-package com.pksheldon4.webhooks.validatingadmission.model;
+package com.pksheldon4.webhooks.admission.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;

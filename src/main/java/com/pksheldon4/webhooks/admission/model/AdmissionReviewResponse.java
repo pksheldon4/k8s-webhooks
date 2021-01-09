@@ -1,4 +1,4 @@
-package com.pksheldon4.webhooks.validatingadmission.model;
+package com.pksheldon4.webhooks.admission.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
@@ -7,14 +7,19 @@ import lombok.Data;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class AdmissionReviewResponse {
 
-    private final String uid;
-    private final boolean allowed;
-    private final AdmissionStatus status;
+    private String uid;
+    private boolean allowed;
+    private AdmissionStatus status;
+    private String patchType;
+    private String patch;
 
-    private AdmissionReviewResponse(String uid, boolean allowed) {
+    private AdmissionReviewResponse(String uid, String jsonPatch) {
         this.uid = uid;
-        this.allowed = allowed;
-        this.status = null;
+        this.allowed = true;
+        if (jsonPatch != null) {
+            this.patchType = "JSONPatch";
+            this.patch = jsonPatch;
+        }
     }
 
 
@@ -25,8 +30,13 @@ public class AdmissionReviewResponse {
     }
 
     public static AdmissionReviewResponse allowed(String uid) {
-        return new AdmissionReviewResponse(uid, true);
+        return AdmissionReviewResponse.allowed(uid, null);
     }
+
+    public static AdmissionReviewResponse allowed(String uid, String jsonPatch) {
+        return new AdmissionReviewResponse(uid, jsonPatch);
+    }
+
 
     public static AdmissionReviewResponse notAllowed(String uid, String message) {
         AdmissionStatus status = new AdmissionStatus(500, message);
