@@ -1,4 +1,4 @@
-package com.pksheldon4.webhooks.validatingadmission;
+package com.pksheldon4.webhooks.validatingadmission.model;
 
 import lombok.Data;
 
