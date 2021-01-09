@@ -1,0 +1,7 @@
+version: "3"
+services:
+  k8s-webhooks:
+    container_name: k8s-webhook
+    image: harbor.pksbeachhouse.com/pksheldon4/k8s-webhook
+    ports:
+      - 8443:8443

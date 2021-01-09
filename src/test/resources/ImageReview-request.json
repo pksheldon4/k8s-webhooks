@@ -1,0 +1,16 @@
+{
+  "apiVersion": "imagepolicy.k8s.io/v1alpha1",
+  "kind": "ImageReview",
+  "spec": {
+    "containers": [
+      {
+        "image": "nginx"
+      }
+    ],
+    "annotations": null,
+    "namespace": "default"
+  },
+  "status": {
+    "allowed": false
+  }
+}

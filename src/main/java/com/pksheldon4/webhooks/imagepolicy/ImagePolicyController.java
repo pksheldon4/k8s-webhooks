@@ -1,8 +1,8 @@
 package com.pksheldon4.webhooks.imagepolicy;
 
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pksheldon4.webhooks.imagepolicy.model.ImageReview;
-import com.pksheldon4.webhooks.imagepolicy.model.Status;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,10 +20,16 @@ public class ImagePolicyController {
     public static final String KIND = "ImageReview";
     //TOOD: externalize this.
     private static final List<String> IMAGE_REGISTRY_WHITELIST = Arrays.asList("k8s.gcr.io", "docker.io");
+    private final ObjectMapper objectMapper;
+
+    public ImagePolicyController(ObjectMapper mapper) {
+        this.objectMapper = mapper;
+    }
+
 
     @PostMapping("/check-image")
-    public ImageReview imagePolicyWebhook(@RequestBody ImageReview imageReview) {
-        log.info(imageReview.toString());
+    public ImageReview imagePolicyWebhook(@RequestBody ImageReview imageReview) throws Exception {
+        log.info(objectMapper.writeValueAsString(imageReview));
 
         List<String> registriesInUse = imageReview.getSpec().getContainers().stream()
             .filter(c -> c.getImage().contains("/"))
@@ -31,10 +37,9 @@ public class ImagePolicyController {
             .collect(Collectors.toList());
 
         registriesInUse.removeAll(IMAGE_REGISTRY_WHITELIST);
-        Status returnStatus = new Status(true);
-        if (registriesInUse.size() > 0) {
-            returnStatus = new Status(false);
+        if (registriesInUse.size() == 0) {
+            imageReview.getStatus().setAllowed(true);
         }
-        return new ImageReview(API_VERSION, KIND, returnStatus);
+        return imageReview;
     }
 }

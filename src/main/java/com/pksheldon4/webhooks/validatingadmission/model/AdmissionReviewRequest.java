@@ -9,18 +9,18 @@ import java.util.Map;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class AdmissionReviewRequest {
 
-    private final String uid;
-    private final GroupVersionResource kind;
-    private final GroupVersionResource resource;
-    private final String subResource;
-    private final GroupVersionResource requestKind;
-    private final GroupVersionResource requestResource;
-    private final String requestSubResource;
-    private final String name;
-    private final String namespace;
-    private final String operation;
-    private final UserInfo userInfo;
-    private final Map<String, Object> object;
-    private final Map<String, Object> options;
+    private String uid;
+    private GroupVersionResource kind;
+    private GroupVersionResource resource;
+    private String subResource;
+    private GroupVersionResource requestKind;
+    private GroupVersionResource requestResource;
+    private String requestSubResource;
+    private String name;
+    private String namespace;
+    private String operation;
+    private UserInfo userInfo;
+    private Map<String, Object> object;
+    private Map<String, Object> options;
     private boolean dryRun;
 }
